@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 # -----------------------------
 # Load environment variables
 # -----------------------------
-
 load_dotenv()
 
 # -----------------------------
@@ -22,7 +21,7 @@ connector_config = {
         "database.password": os.getenv("POSTGRES_PASSWORD"),
         "database.dbname": os.getenv("POSTGRES_DB"),
         "topic.prefix": "banking_server",
-        "table.include.list": "public.customers,public.accounts,public.transactions",
+        "table.include.list": "public.customers,public.accounts,public.transactions, public.ledger_entries",
         "plugin.name": "pgoutput",
         "slot.name": "banking_slot",
         "publication.autocreate.mode": "filtered",
