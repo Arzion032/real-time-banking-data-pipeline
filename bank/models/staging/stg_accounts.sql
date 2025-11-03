@@ -7,6 +7,7 @@ with ranked as (
         v:account_type::string  as account_type,
         v:status::string       as account_status,
         v:balance::float        as balance,
+        v:interest_rate::float   as interest_rate,
         v:currency::string      as currency,
         v:created_at::timestamp as created_at,
         current_timestamp       as load_timestamp,
@@ -23,6 +24,7 @@ SELECT
     account_type,
     account_status,
     balance,
+    interest_rate,
     currency,
     created_at,
     load_timestamp
