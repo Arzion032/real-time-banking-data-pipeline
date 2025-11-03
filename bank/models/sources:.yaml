@@ -1,0 +1,9 @@
+sources:
+    - name : raw
+      database : bank
+      schema : raw
+      tables :
+        - name : accounts
+        - name : customers
+        - name : transactions
+        - name : ledger_entries
