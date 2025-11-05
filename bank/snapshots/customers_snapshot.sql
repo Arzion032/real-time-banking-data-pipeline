@@ -9,8 +9,8 @@
                     'last_name', 
                     'email', 
                     'phone', 
-                    'address', 
-                    'status']
+                    'cust_address',
+                    'cust_status',]
     )
 }}
 SELECT * FROM  {{ ref('stg_customers') }}

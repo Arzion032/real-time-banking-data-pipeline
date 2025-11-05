@@ -7,7 +7,7 @@
         strategy='check',
         check_cols=['customer_id', 
                     'account_type', 
-                    'status', 
+                    'account_status',
                     'balance', 
                     'interest_rate', 
                     ]
