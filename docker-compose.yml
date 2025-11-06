@@ -89,8 +89,8 @@ services:
       - ./docker/dags:/opt/airflow/dags
       - ./docker/logs:/opt/airflow/logs
       - ./docker/plugins:/opt/airflow/plugins
-      - ./banking_dbt:/opt/airflow/banking_dbt
-      - ./banking_dbt/.dbt:/home/airflow/.dbt
+      - ./bank:/opt/airflow/bank
+      - ./bank/.dbt:/home/airflow/.dbt
     ports:
       - "8080:8080"
     command: webserver
@@ -110,8 +110,8 @@ services:
       - ./docker/dags:/opt/airflow/dags
       - ./docker/logs:/opt/airflow/logs
       - ./docker/plugins:/opt/airflow/plugins
-      - ./banking_dbt:/opt/airflow/banking_dbt
-      - ./banking_dbt/.dbt:/home/airflow/.dbt
+      - ./bank:/opt/airflow/bank
+      - ./bank/.dbt:/home/airflow/.dbt
     command: scheduler
 
 
@@ -127,7 +127,7 @@ services:
     volumes:
       - airflow_postgres_data:/var/lib/postgresql/data
     ports:
-      - "5433:5432"  # separate from banking-postgres to avoid conflict
+      - "5433:5432"
 
 volumes:
   airflow_postgres_data:

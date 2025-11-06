@@ -55,8 +55,17 @@ def write_to_minio(table_name, records):
     os.remove(file_path)
     print(f'✅ Uploaded {len(records)} records to s3://{bucket}/{s3_key}')
 
-# Batch consume
-batch_size = 50
+# Default batch size
+default_batch_size = 50
+
+# Custom batch sizes per topic
+batch_sizes = {
+    'banking_server.public.customers': 10,  # flush every 10 records
+    'banking_server.public.accounts': 50,
+    'banking_server.public.transactions': 50,
+    'banking_server.public.ledger_entries': 50
+}
+
 buffer = {
     'banking_server.public.customers': [],
     'banking_server.public.accounts': [],
@@ -69,14 +78,17 @@ print("✅ Connected to Kafka. Listening for messages...")
 for message in consumer:
     topic = message.topic
     event = json.loads(message.value.decode('utf-8'))
-    payload = event.get("payload") or event 
-    record = payload.get("after")  
-    print(message)
+    payload = event.get("payload") or event
+    record = payload.get("after")
+    
     if record:
         buffer[topic].append(record)
         print(f"[{topic}] New record -> {record}")
 
+    # Determine batch size for this topic
+    topic_batch_size = batch_sizes.get(topic, default_batch_size)
 
-    if len(buffer[topic]) >= batch_size:
+    if len(buffer[topic]) >= topic_batch_size:
         write_to_minio(topic.split('.')[-1], buffer[topic])
         buffer[topic] = []
+        print(f"[{topic}] Flushed {topic_batch_size} records to MinIO")
