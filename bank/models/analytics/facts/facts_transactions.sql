@@ -1,4 +1,8 @@
-{{ config(materialized='incremental', unique_key='transaction_id') }}
+{{ config(
+  materialized='incremental', 
+  unique_key='transaction_id',
+  incremental_strategy='merge'
+)}}
 
 SELECT
     t.transaction_id,
@@ -16,9 +20,12 @@ SELECT
 FROM {{ ref('stg_transactions')  }} AS t
     LEFT JOIN {{ ref('stg_accounts') }} AS a
         ON t.account_id = a.account_id
-
 {% if is_incremental() %}
-  WHERE t.txn_time > (SELECT MAX(txn_time) FROM {{ this }})
+LEFT JOIN {{ this }} AS existing
+    ON t.transaction_id = existing.transaction_id
+WHERE existing.transaction_id IS NULL
+  AND t.txn_time > (SELECT MAX(txn_time) FROM {{ this }})
 {% endif %}
+
 
 

@@ -60,7 +60,7 @@ default_batch_size = 50
 
 # Custom batch sizes per topic
 batch_sizes = {
-    'banking_server.public.customers': 10,  # flush every 10 records
+    'banking_server.public.customers': 10,
     'banking_server.public.accounts': 50,
     'banking_server.public.transactions': 50,
     'banking_server.public.ledger_entries': 50
