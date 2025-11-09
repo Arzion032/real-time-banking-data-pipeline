@@ -1,4 +1,6 @@
-import os, logging, boto3
+import os
+import logging
+import boto3
 import snowflake.connector
 from airflow import DAG
 from airflow.operators.python import PythonOperator
