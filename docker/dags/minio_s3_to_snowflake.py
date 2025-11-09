@@ -1,4 +1,5 @@
-import os, logging, boto3, snowflake.connector
+import os, logging, boto3
+import snowflake.connector
 from airflow import DAG
 from airflow.operators.python import PythonOperator
 from airflow.utils.email import send_email
