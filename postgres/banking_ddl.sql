@@ -31,15 +31,8 @@ CREATE TABLE accounts (
     account_number VARCHAR(20) UNIQUE NOT NULL
         DEFAULT ('AC' || to_char(nextval('account_number_seq'), 'FM0000000000')),
     customer_id INT NOT NULL REFERENCES customers(id) ON DELETE CASCADE,
-    account_type VARCHAR(20) NOT NULL CHECK (account_type IN ('SAVINGS', 'CHECKING', 'CREDIT')),
-    status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'CLOSED', 'FROZEN')),
-    balance NUMERIC(18, 2) NOT NULL DEFAULT 0.00 CHECK (balance >= 0),
-    interest_rate NUMERIC(5, 2) DEFAULT 0.00,
-    currency CHAR(3) NOT NULL REFERENCES currencies(code) DEFAULT 'USD',
-    opened_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    closed_at TIMESTAMP WITH TIME ZONE,
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
+    account_type VARCHAR(20) NOT NULL CHECK (account_type IN ('SAVINGS', 'CHECKING', 'CREDIT', 'CREDIT', 'LOAN')),
+    status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'CLOSED', 'INACTIVE')
 
 -- Index for joins
 CREATE INDEX idx_accounts_customer_id ON accounts(customer_id);

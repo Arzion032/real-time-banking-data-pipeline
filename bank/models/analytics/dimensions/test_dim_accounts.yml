@@ -1,0 +1,29 @@
+models:
+  - name: accounts_latest
+    description: "Latest active version of account records from accounts_snapshot"
+    columns:
+      - name: account_id
+        description: "Unique account identifier"
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        description: "FK to customers_latest"
+        tests:
+          - not_null
+      - name: account_type
+        tests:
+          - accepted_values:
+              values: ['CHECKING', 'SAVINGS', 'LOAN', 'CREDIT']
+      - name: account_status
+        tests:
+          - accepted_values:
+              values: ['ACTIVE', 'CLOSED', 'CLOSED']
+      - name: balance
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: "balance >= 0"
+      - name: is_current
+        description: "Flag for currently active record"
+        tests:
+          - not_null

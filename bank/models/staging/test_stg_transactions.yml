@@ -1,0 +1,36 @@
+models:
+  - name: stg_transactions
+    description: "Flattened transactions from raw.transactions"
+    columns:
+      - name: transaction_id
+        tests:
+          - not_null
+          - unique
+      - name: account_id
+        tests:
+          - not_null
+      - name: related_account_id
+        description: "Required for transfers"
+      - name: txn_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['DEPOSIT', 'WITHDRAWAL', 'TRANSFER']
+      - name: direction
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['DEBIT', 'CREDIT']
+      - name: amount
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "amount > 0"
+      - name: txn_status
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['PENDING', 'COMPLETED', 'FAILED', 'REVERSED']
+      - name: txn_time
+        tests:
+          - not_null

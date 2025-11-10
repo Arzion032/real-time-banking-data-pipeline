@@ -25,7 +25,11 @@ with DAG(
     
     dbt_staging = BashOperator(
         task_id="dbt_run_staging",
-        bash_command="cd /opt/airflow/bank && dbt run --select staging --profiles-dir /home/airflow/.dbt"
+        bash_command="""
+        cd /opt/airflow/bank \
+        && dbt deps --profiles-dir /home/airflow/.dbt \
+        && dbt run --select staging --profiles-dir /home/airflow/.dbt
+        """    
     )
     dbt_snapshot = BashOperator(
         task_id="dbt_snapshot",

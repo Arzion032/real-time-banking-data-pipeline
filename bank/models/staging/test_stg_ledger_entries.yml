@@ -1,0 +1,27 @@
+models:
+  - name: stg_ledger_entries
+    description: "Flattened ledger entries from raw.ledger_entries"
+    columns:
+      - name: id
+        tests:
+          - not_null
+          - unique
+      - name: transaction_id
+        tests:
+          - not_null
+      - name: account_id
+        tests:
+          - not_null
+      - name: entry_type
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['DEBIT', 'CREDIT']
+      - name: amount
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: "amount > 0"
+      - name: txn_time
+        tests:
+          - not_null

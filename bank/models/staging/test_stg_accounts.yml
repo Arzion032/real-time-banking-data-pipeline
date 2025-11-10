@@ -1,0 +1,25 @@
+models:
+  - name: stg_accounts
+    description: "Cleaned and deduplicated account records from raw.accounts"
+    columns:
+      - name: account_id
+        tests:
+          - not_null
+          - unique
+      - name: customer_id
+        tests:
+          - not_null
+      - name: account_type
+        tests:
+          - accepted_values:
+              values: ['CHECKING', 'SAVINGS', 'CREDIT', 'LOAN']
+      - name: account_status
+        tests:
+          - accepted_values:
+              values: ['ACTIVE', 'INACTIVE', 'CLOSED']
+      - name: balance
+        tests:
+          - not_null
+      - name: created_at
+        tests:
+          - not_null

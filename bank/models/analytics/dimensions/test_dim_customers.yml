@@ -1,0 +1,25 @@
+models:
+  - name: customers_latest
+    description: "Latest active version of customer records from customers_snapshot"
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+      - name: first_name
+        tests:
+          - not_null
+      - name: last_name
+        tests:
+          - not_null
+      - name: email
+        tests:
+          - not_null
+      - name: cust_status
+        tests:
+          - accepted_values:
+              values: ['ACTIVE', 'INACTIVE', 'SUSPENDED']
+      - name: is_current
+        description: "Flag for currently active customer"
+        tests:
+          - not_null

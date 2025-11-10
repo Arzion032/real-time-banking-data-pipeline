@@ -1,0 +1,25 @@
+models:
+  - name: stg_customers
+    description: "Flattened and deduplicated customer records from raw.customers"
+    columns:
+      - name: customer_id
+        description: "Unique identifier for the customer"
+        tests:
+          - not_null
+          - unique
+      - name: first_name
+        tests:
+          - not_null
+      - name: last_name
+        tests:
+          - not_null
+      - name: email
+        tests:
+          - not_null
+      - name: date_of_birth
+        tests:
+          - not_null
+      - name: cust_status
+        tests:
+          - accepted_values:
+              values: ['ACTIVE', 'INACTIVE', 'SUSPENDED']
