@@ -28,16 +28,23 @@ with DAG(
         bash_command="""
         cd /opt/airflow/bank \
         && dbt deps --profiles-dir /home/airflow/.dbt \
-        && dbt run --select staging --profiles-dir /home/airflow/.dbt
+        && dbt run --select staging --profiles-dir /home/airflow/.dbt \
+        && dbt test --select staging --profiles-dir /home/airflow/.dbt \
         """    
     )
     dbt_snapshot = BashOperator(
         task_id="dbt_snapshot",
-        bash_command="cd /opt/airflow/bank && dbt snapshot --profiles-dir /home/airflow/.dbt"
+        bash_command="""
+        cd /opt/airflow/bank \
+        && dbt snapshot --profiles-dir /home/airflow/.dbt"""
     )
     dbt_run_analytics = BashOperator(
         task_id="dbt_run_analytics",
-        bash_command="cd /opt/airflow/bank && dbt run --select analytics --profiles-dir /home/airflow/.dbt"
+        bash_command="""
+        cd /opt/airflow/bank \
+        && dbt run --select analytics --profiles-dir /home/airflow/.dbt \
+        && dbt test --select analytics --profiles-dir /home/airflow/.dbt 
+        """
     )
     dbt_run_report_email = EmailOperator(
         task_id="dbt_run_report_email",

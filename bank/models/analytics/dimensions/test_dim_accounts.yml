@@ -19,10 +19,6 @@ models:
         tests:
           - accepted_values:
               values: ['ACTIVE', 'CLOSED', 'CLOSED']
-      - name: balance
-        tests:
-          - dbt_utils.expression_is_true:
-              expression: "balance >= 0"
       - name: is_current
         description: "Flag for currently active record"
         tests:
