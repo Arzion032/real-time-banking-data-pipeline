@@ -5,7 +5,7 @@ This project implements a **realtime banking data pipeline** that simulates bank
 
 Key features include:
 - Realtime ingestion using **Debezium + Kafka**
-- Storage in **PostgreSQL** and **Snowflake**
+- Storage in **PostgreSQL**, **MinIO/S3** and **Snowflake**
 - Data transformation and SCD2 implementation with **dbt**
 - Containerized architecture using **Docker** and **Docker Compose**
 - CI/CD pipeline for automated deployment
@@ -60,10 +60,6 @@ Key features include:
      - Total Transaction Amount per Transaction Type
      - Average Balance by Account Type
      - Total Customers Balance
-
----
-
-## Folder Structure
 
 ---
 
