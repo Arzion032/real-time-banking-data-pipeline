@@ -93,6 +93,9 @@ Key features include:
 
 ## Notes
 - PostgreSQL tables: `transactions`, `customers`, `accounts`, `ledger_entries`.
-- Snowflake schemas: `raw`, `staging`, `analytics`.
+- Snowflake table layers: `raw`, `staging`, `analytics`.
+  - `raw` → stores files loaded directly from MinIO/S3
+  - `staging` → flattened tables for transformation and dbt testing
+  - `analytics` → final tables with incremental and SCD2 data for reporting
 - DAG email notifications include file counts and run status.
 - dbt snapshots implement **SCD2** for customer and account history.
