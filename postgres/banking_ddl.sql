@@ -58,11 +58,11 @@ CREATE TABLE transactions (
 
 CREATE INDEX idx_transactions_account_id ON transactions(account_id);
 
--- ---------- 5) Ledger entries (double-entry) ----------
+-- ---------- 5) Ledger entries ----------
 CREATE TABLE ledger_entries (
     id BIGSERIAL PRIMARY KEY,
     transaction_id BIGINT REFERENCES transactions(id) ON DELETE CASCADE,
-    -- account_id NULL means 'external' / system counterparty
+
     account_id INT REFERENCES accounts(id),
     entry_type VARCHAR(10) NOT NULL CHECK (entry_type IN ('DEBIT', 'CREDIT')),
     amount NUMERIC(18,2) NOT NULL CHECK (amount > 0),
